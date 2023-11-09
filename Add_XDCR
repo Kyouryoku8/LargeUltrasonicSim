@@ -1,0 +1,11 @@
+# Function to add a new transducers (XDCRs)
+def add_xdcr_record(id, phase, pos_x, pos_y, ori_x, ori_y):
+    record = {
+        'ID': id,
+        'Phase': phase,
+        'PosX': pos_x,
+        'PosY': pos_y,
+        'OriX': ori_x,
+        'OriY': ori_y
+    }
+    xdcr_records.append(record)
