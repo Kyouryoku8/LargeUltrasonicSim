@@ -1,8 +1,6 @@
 # Calculate pressure at each point
 # This is currently 2D and needs to become 3D
 result = np.zeros((resolution, resolution), dtype=complex)
-result2 = np.zeros((resolution, resolution), dtype=float)
-result3 = np.zeros((resolution, resolution), dtype=float)
 for i in range(resolution):
     for j in range(resolution):
         for record in xdcr_records:
