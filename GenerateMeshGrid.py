@@ -6,6 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 mg_width = 0.28
 mg_depth = 0.28
 mg_height = 0.28
+mg_height = 0.001
 mesh_grid_cylinder = True
 spacing = 0.001
 
