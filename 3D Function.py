@@ -2,7 +2,6 @@ import csv
 import numpy as np
 from tqdm import tqdm
 from multiprocessing import Pool
-import time
 
 class DataEntry:
     def __init__(self, ID, phase, position, orientation):
