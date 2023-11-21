@@ -11,7 +11,8 @@ class DataEntry:
 # Function to read the CSV file and store data in a structured variable array
 def read_csv(filename):
     data = []
-    with open(filename, newline='') as csvfile:
+    # Use 'utf-8-sig' encoding to correctly handle the UTF-8 Byte Order Mark (BOM) if present to avoid error
+    with open(filename, newline='', encoding = 'utf-8-sig') as csvfile: 
         reader = csv.DictReader(csvfile)
         for row in reader:
             entry = DataEntry(
