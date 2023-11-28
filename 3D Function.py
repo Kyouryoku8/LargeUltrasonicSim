@@ -52,14 +52,14 @@ def process_3d_array(X, Y, Z, XDCRs, resolution, num_processes):
     chunk_size = resolution // num_processes
     grid_chunks = [(X[i*chunk_size:(i+1)*chunk_size, :, :], Y[i*chunk_size:(i+1)*chunk_size, :, :], Z[i*chunk_size:(i+1)*chunk_size, :, :], XDCRs) for i in range(num_processes)]
     with Pool(processes=num_processes) as pool:
-        results = list(tqdm(pool.imap(process_grid_chunk, grid_chunks), total=len(grid_chunks), desc="Processing in parallel"))
+        results = list(pool.imap(process_grid_chunk, grid_chunks))
     result = np.concatenate(results, axis=0)
     return result
 
 def calculate_magnitude_phase(result, resolution):
     result_magnitude = np.zeros((resolution, resolution, resolution), dtype=float)
     result_phase = np.zeros((resolution, resolution, resolution), dtype=float)
-    for i in tqdm(range(resolution), desc="Calculating Magnitude and Phase", unit='Iter'):
+    for i in range(resolution):
         for j in range(resolution):
             for k in range(resolution):
                 result_magnitude[i, k, j] = np.abs(result[i, j, k])
@@ -70,7 +70,7 @@ def export_results_to_csv(results, filename):
     with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['X', 'Y', 'Z', 'Magnitude', 'Phase'])
-        for i in tqdm(range(results['magnitude'].shape[0]), desc="Exporting Results", unit='Iter'):
+        for i in range(results['magnitude'].shape[0]):
             for j in range(results['magnitude'].shape[1]):
                 for k in range(results['magnitude'].shape[2]):
                     writer.writerow([
@@ -103,6 +103,6 @@ def main():
     results = {'X': X, 'Y': Y, 'Z': Z, 'magnitude': result_magnitude, 'phase': result_phase}
     output_csv_filename = 'resultsLarge.csv'
     export_results_to_csv(results, output_csv_filename)
-
+    print("Task Completed Successfuly")
 if __name__ == "__main__":
     main()
