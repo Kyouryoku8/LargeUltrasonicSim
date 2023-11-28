@@ -48,7 +48,7 @@ def process_grid_chunk(args):
                     partial_result[i, j, k] += (D_f / d) * np.exp(1j * (entry.phase + d * (2 * np.pi / 8.3)))
     return partial_result
 
-def process_3d_array(X, Y, Z, XDCRs, resolution, num_processes=4):
+def process_3d_array(X, Y, Z, XDCRs, resolution, num_processes):
     chunk_size = resolution // num_processes
     grid_chunks = [(X[i*chunk_size:(i+1)*chunk_size, :, :], Y[i*chunk_size:(i+1)*chunk_size, :, :], Z[i*chunk_size:(i+1)*chunk_size, :, :], XDCRs) for i in range(num_processes)]
     with Pool(processes=num_processes) as pool:
@@ -84,10 +84,10 @@ def export_results_to_csv(results, filename):
 def main():
     file_name = 'XDCRs.csv'
     XDCRs = read_csv(file_name)
-    num_processes = 4
 
     while True:
         try:
+            num_processes = int(input("Enter Number of Processes: "))
             window = int(input("Enter window: "))
             resolution = int(input("Enter resolution: "))
             if resolution % num_processes != 0:
@@ -98,10 +98,10 @@ def main():
             print("Please enter an integer")
 
     X, Y, Z = generate_grid(window, resolution)
-    result = process_3d_array(X, Y, Z, XDCRs, resolution)
+    result = process_3d_array(X, Y, Z, XDCRs, resolution, num_processes)
     result_magnitude, result_phase = calculate_magnitude_phase(result, resolution)
     results = {'X': X, 'Y': Y, 'Z': Z, 'magnitude': result_magnitude, 'phase': result_phase}
-    output_csv_filename = 'results.csv'
+    output_csv_filename = 'resultsLarge.csv'
     export_results_to_csv(results, output_csv_filename)
 
 if __name__ == "__main__":
