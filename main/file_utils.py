@@ -1,5 +1,3 @@
-# file_utils.py
-
 import os
 
 class FileUtils:
