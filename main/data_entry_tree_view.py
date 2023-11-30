@@ -10,7 +10,7 @@ class DataEntryTreeView(QTreeView):
         deleteAction = menu.addAction("Delete")
         action = menu.exec_(self.mapToGlobal(event.pos()))
         
-        # Connect actions tofunctions
+        # Connect actions to your functions
         if action == viewAction:
             self.viewFile()
         elif action == calculateAction:
