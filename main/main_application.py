@@ -50,6 +50,10 @@ class MainApplication(QMainWindow):
         # Main splitter
         mainSplitter = QSplitter(Qt.Horizontal)
 
+        menuBar = self.menuBar()
+        optionsMenu = menuBar.addMenu('Options')
+        helpMenu = menuBar.addMenu('Help')
+        mainSplitter = QSplitter(Qt.Horizontal)
         # Left splitter for the folder view tabs
         leftTabWidget = QTabWidget()
 
