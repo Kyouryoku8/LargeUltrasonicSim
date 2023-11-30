@@ -9,7 +9,7 @@ class MainApplication(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Data Processing GUI')
-        self.setGeometry(100, 100, 800, 600)  # Adjust size to match your screenshot
+        self.setGeometry(100, 100, 800, 600) 
         self.initUI()
 
     def displaySelectedFile(self, index):
