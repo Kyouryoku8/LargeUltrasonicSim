@@ -1,3 +1,5 @@
+# output_files_tree_view.py
+
 from PyQt5.QtWidgets import QTreeView, QMenu
 from file_utils import FileUtils
 
