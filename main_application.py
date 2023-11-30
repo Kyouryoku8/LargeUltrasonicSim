@@ -9,6 +9,8 @@ from matplotlib.figure import Figure
 from PyQt5.QtCore import QDir, Qt
 from data_entry_tree_view import DataEntryTreeView
 from output_files_tree_view import OutputFilesTreeView
+from data_processing import DataProcessor
+
 
 class MainApplication(QMainWindow):
     def __init__(self):
@@ -124,12 +126,8 @@ class MainApplication(QMainWindow):
         msgBox.exec_()
 
     def visualizeData(self, filePath, target_z = 200):
-        # Read the data
-        data = pd.read_csv(filePath)
-        filtered_data = data[data['Z'] == target_z]
-        X = np.array(filtered_data['X'].tolist())
-        Y = np.array(filtered_data['Y'].tolist())
-        Z = np.array(filtered_data['Magnitude'].tolist())
+        filtered_data = DataProcessor.filter_data_by_z(filePath, target_z)
+        X, Y, Z = DataProcessor.get_xyz_from_data(filtered_data)
 
         x_min, x_max = X.min(), X.max()
         y_min, y_max = Y.min(), Y.max()

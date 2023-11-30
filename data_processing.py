@@ -1,6 +1,7 @@
 # data_processing.py
 
 import numpy as np
+import pandas as pd
 from multiprocessing import Pool
 
 def generate_grid(window, resolution):
@@ -55,5 +56,17 @@ def calculate_magnitude_phase(result, resolution):
                 result_magnitude[i, j, k] = np.abs(result[i, j, k])
                 result_phase[i, j, k] = np.angle(result[i, j, k])
     return result_magnitude, result_phase
-  
-          
+
+class DataProcessor:
+   @staticmethod
+   def filter_data_by_z(filePath, target_z = 200):
+      data = pd.read_csv(filePath)
+      return data[data['Z'] == target_z]
+
+   @staticmethod
+   def get_xyz_from_data(filtered_data):
+      return(
+         np.array(filtered_data['X'].tolist()),
+         np.array(filtered_data['Y'].tolist()),
+         np.array(filtered_data['Magnitude'].tolist())
+      )       
