@@ -11,7 +11,7 @@ from data_entry_tree_view import DataEntryTreeView
 from output_files_tree_view import OutputFilesTreeView
 from data_processing import DataProcessor
 from file_operations import copy_files_to_folder
-
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT
 
 class MainApplication(QMainWindow):
     def __init__(self):
@@ -157,22 +157,22 @@ class MainApplication(QMainWindow):
         msgBox.setStandardButtons(QMessageBox.Ok)
         msgBox.exec_()
 
-    def visualizeData(self, filePath, target_z = 200):
+    def visualizeData(self, filePath, target_z=200):
         filtered_data = DataProcessor.filter_data_by_z(filePath, target_z)
         X, Y, Z = DataProcessor.get_xyz_from_data(filtered_data)
 
         x_min, x_max = X.min(), X.max()
         y_min, y_max = Y.min(), Y.max()
-        z_min, z_max = Z.min(), Z.max()        
+        z_min, z_max = Z.min(), Z.max()
 
         x_margin = (x_max - x_min) * 0.1
         y_margin = (y_max - y_min) * 0.1
         z_margin = (z_max - z_min) * 0.1
 
-        # Create a matplotlib canvas
+        # Create a matplotlib canvas and add it to the layout
         canvas = FigureCanvas(Figure(figsize=(5, 3)))
         ax = canvas.figure.add_subplot(111, projection='3d')
-        ax.plot_trisurf(X, Y, Z, linewidth=0, edgecolor='none')
+        surf = ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')  # Change colormap here
 
         # Set axis limits
         ax.set_xlim([x_min - x_margin, x_max + x_margin])
@@ -184,15 +184,23 @@ class MainApplication(QMainWindow):
         ax.set_ylabel("Y")
         ax.set_zlabel("Amplitude")
 
+        # Add color bar
+        canvas.figure.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
+
         # Clear the previous plot and set the new one
-        vizTab = self.rightTabWidget.widget(1) 
+        vizTab = self.rightTabWidget.widget(1)
 
         # Clear the existing layout
         self.clearLayout(vizTab.layout())
 
-        # Set the new layout with the matplotlib canvas
+        # Set the new layout with the matplotlib canvas and the toolbar
         newLayout = QVBoxLayout()
         newLayout.addWidget(canvas)
+
+        # Add Matplotlib navigation toolbar
+        toolbar = NavigationToolbar2QT(canvas, vizTab)
+        newLayout.addWidget(toolbar)
+
         vizTab.setLayout(newLayout)
 
     def clearLayout(self, layout):
