@@ -13,7 +13,6 @@ class MainApplication(QMainWindow):
         self.initUI()
 
     def displaySelectedFile(self, index):
-        # Corrected: Use the correct model for each view
         folderModel = self.inputFolderView.model() if self.inputFolderView.hasFocus() else self.outputFolderView.model()
         fileInfo = folderModel.fileInfo(index)
         if fileInfo.isFile() and fileInfo.suffix() == "csv":
@@ -23,11 +22,11 @@ class MainApplication(QMainWindow):
             self.rightTabWidget.setCurrentWidget(self.dataFileTab)
 
     def loadCsvData(self, filePath):
-        # Load your CSV data into the QTableWidget
+        # Load CSV data into the QTableWidget
         with open(filePath, 'r', encoding='utf-8-sig') as file:
             content = file.readlines()
 
-        # Clear the table first
+        # Clear table
         self.dataFileTable.clear()
         self.dataFileTable.setRowCount(0)
 
