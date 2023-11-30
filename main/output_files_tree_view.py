@@ -1,5 +1,3 @@
-# output_files_tree_view.py
-
 from PyQt5.QtWidgets import QTreeView, QMenu
 from file_utils import FileUtils
 
@@ -11,7 +9,7 @@ class OutputFilesTreeView(QTreeView):
         deleteAction = menu.addAction("Delete")
         action = menu.exec_(self.mapToGlobal(event.pos()))
 
-        # Connect actions to functions
+        # Connect actions to your functions
         if action == viewAction:
             self.viewFile()
         elif action == visualizeAction:
@@ -24,8 +22,14 @@ class OutputFilesTreeView(QTreeView):
         pass
 
     def visualizeFile(self):
-        # Implement visualize functionality
-        pass
+        index = self.currentIndex()
+        if index.isValid():
+            model = self.model()
+            fileInfo = model.fileInfo(index)
+            if fileInfo.isFile():
+                filePath = fileInfo.absoluteFilePath()
+                mainWindow = self.window()  # Get main window instance
+                mainWindow.visualizeData(filePath) 
 
     def deleteFile(self):
         index = self.currentIndex()
