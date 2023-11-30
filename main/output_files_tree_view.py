@@ -9,7 +9,7 @@ class OutputFilesTreeView(QTreeView):
         deleteAction = menu.addAction("Delete")
         action = menu.exec_(self.mapToGlobal(event.pos()))
 
-        # Connect actions to your functions
+        # Connect actions to functions
         if action == viewAction:
             self.viewFile()
         elif action == visualizeAction:
