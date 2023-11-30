@@ -1,7 +1,10 @@
 # file_operations.py
 
 import csv
+import shutil
+from PyQt5.QtWidgets import QFileDialog
 from data_entry import DataEntry
+
 
 def read_csv(filename):
     """
@@ -38,3 +41,13 @@ def export_results_to_csv(results, filename):
                         results['phase'][i, j, k]
                     ])
 
+def copy_files_to_folder(target_folder):
+    # Open file dialog to select files
+    files, _ = QFileDialog.getOpenFileNames(caption="Select files to import")
+    
+    # Copy selected files to the target folder
+    for file_path in files:
+        try:
+            shutil.copy(file_path, target_folder)
+        except Exception as e:
+            print(f"Error copying file {file_path}: {e}")

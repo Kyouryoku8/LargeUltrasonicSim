@@ -3,13 +3,14 @@ import os
 import numpy as np
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
-from PyQt5.QtWidgets import QApplication, QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QMessageBox, QSizePolicy, QMainWindow, QVBoxLayout, QTabWidget, QFileSystemModel, QWidget, QHBoxLayout, QSplitter, QTableWidget, QTableWidgetItem, QLabel
+from PyQt5.QtWidgets import QApplication, QDialog, QPushButton, QFormLayout, QLineEdit, QDialogButtonBox, QMessageBox, QSizePolicy, QMainWindow, QVBoxLayout, QTabWidget, QFileSystemModel, QWidget, QHBoxLayout, QSplitter, QTableWidget, QTableWidgetItem, QLabel
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from PyQt5.QtCore import QDir, Qt
 from data_entry_tree_view import DataEntryTreeView
 from output_files_tree_view import OutputFilesTreeView
 from data_processing import DataProcessor
+from file_operations import copy_files_to_folder
 
 
 class MainApplication(QMainWindow):
@@ -68,24 +69,38 @@ class MainApplication(QMainWindow):
         leftTabWidget = QTabWidget()
 
         # Input Directory Tab
-        self.inputFolderView = DataEntryTreeView()  # Create an instance of custom tree view
+        self.inputFolderView = DataEntryTreeView()
         self.inputFolderModel = QFileSystemModel()
         self.inputFolderView.setModel(self.inputFolderModel)
         inputFolderPath = os.path.join(QDir.currentPath(), 'DataFiles')
         self.inputFolderModel.setRootPath(inputFolderPath)
         self.inputFolderView.setRootIndex(self.inputFolderModel.index(inputFolderPath))
-        leftTabWidget.addTab(self.inputFolderView, "Input Files")
+        self.importInputButton = QPushButton('Import to Input')
+        self.importInputButton.clicked.connect(lambda: self.importFiles('DataFiles'))
+
+        inputTabLayout = QVBoxLayout()
+        inputTabLayout.addWidget(self.inputFolderView)
+        inputTabLayout.addWidget(self.importInputButton)  # Button below the file explorer
+        inputTab = QWidget()
+        inputTab.setLayout(inputTabLayout)
+        leftTabWidget.addTab(inputTab, "Input Files")
 
         # Output Directory Tab
-        self.outputFolderView = OutputFilesTreeView()  # Create an instance of custom tree view
+        self.outputFolderView = OutputFilesTreeView()
         self.outputFolderModel = QFileSystemModel()
         self.outputFolderView.setModel(self.outputFolderModel)
         outputFolderPath = os.path.join(QDir.currentPath(), 'OutputFiles')
         self.outputFolderModel.setRootPath(outputFolderPath)
         self.outputFolderView.setRootIndex(self.outputFolderModel.index(outputFolderPath))
-        leftTabWidget.addTab(self.outputFolderView, "Output Files")
+        self.importOutputButton = QPushButton('Import to Output')
+        self.importOutputButton.clicked.connect(lambda: self.importFiles('OutputFiles'))
 
-
+        outputTabLayout = QVBoxLayout()
+        outputTabLayout.addWidget(self.outputFolderView)
+        outputTabLayout.addWidget(self.importOutputButton)  # Button below the file explorer
+        outputTab = QWidget()
+        outputTab.setLayout(outputTabLayout)
+        leftTabWidget.addTab(outputTab, "Output Files")
         # Add leftTabWidget to the main splitter
         mainSplitter.addWidget(leftTabWidget)
         
@@ -121,6 +136,14 @@ class MainApplication(QMainWindow):
         if dialog.exec_():
             width, height = dialog.getSettings()
             self.resize(width, height)
+
+    def importFiles(self, folder_name):
+        # Call the function to copy files
+        target_folder = os.path.join(QDir.currentPath(), folder_name)
+        copy_files_to_folder(target_folder)
+        # Refresh the views
+        self.inputFolderModel.setRootPath(target_folder)
+        self.outputFolderModel.setRootPath(target_folder)
 
     def showHelpPopup(self):
         msgBox = QMessageBox()
