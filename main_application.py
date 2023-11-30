@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
-from PyQt5.QtWidgets import QApplication, QSizePolicy, QMainWindow, QVBoxLayout, QTabWidget, QFileSystemModel, QWidget, QHBoxLayout, QSplitter, QTableWidget, QTableWidgetItem, QLabel
+from PyQt5.QtWidgets import QApplication, QMessageBox, QSizePolicy, QMainWindow, QVBoxLayout, QTabWidget, QFileSystemModel, QWidget, QHBoxLayout, QSplitter, QTableWidget, QTableWidgetItem, QLabel
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from PyQt5.QtCore import QDir, Qt
@@ -58,6 +58,10 @@ class MainApplication(QMainWindow):
         optionsMenu = menuBar.addMenu('Options')
         helpMenu = menuBar.addMenu('Help')
         mainSplitter = QSplitter(Qt.Horizontal)
+
+        aboutAction = helpMenu.addAction('About')
+        aboutAction.triggered.connect(self.showHelpPopup)
+
         # Left splitter for the folder view tabs
         leftTabWidget = QTabWidget()
 
@@ -106,6 +110,18 @@ class MainApplication(QMainWindow):
 
         self.inputFolderView.clicked.connect(self.displaySelectedFile)
         self.outputFolderView.clicked.connect(self.displaySelectedFile)
+
+    def showHelpPopup(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setWindowTitle("About")
+        msgBox.setText("Welcome to LargeUltrasonicSIM\n\n"
+                       "You can view the .csv in table format by selecting view when right clicking an input file\n\n"
+                       "You can run a simulation based on user defined parameters by selecting calculate when right clicking an input file\n\n"
+                       "You can visualize the output by right-clicking your output file and selecting visualize"
+                       )
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()
 
     def visualizeData(self, filePath, target_z = 200):
         # Read the data
