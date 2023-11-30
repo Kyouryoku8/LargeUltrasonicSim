@@ -1,3 +1,5 @@
+# calculation_dialog.py
+
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QApplication, QPushButton, QLineEdit, QLabel, QWidget, QTextEdit
 from data_entry import DataEntry
 from file_operations import read_csv, export_results_to_csv
