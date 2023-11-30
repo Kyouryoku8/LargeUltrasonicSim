@@ -172,7 +172,7 @@ class MainApplication(QMainWindow):
         # Create a matplotlib canvas and add it to the layout
         canvas = FigureCanvas(Figure(figsize=(5, 3)))
         ax = canvas.figure.add_subplot(111, projection='3d')
-        surf = ax.plot_trisurf(X, Y, Z, cmap='viridis', edgecolor='none')  # Change colormap here
+        surf = ax.plot_trisurf(X, Y, Z, cmap='inferno', edgecolor='none')  # Change colormap here
 
         # Set axis limits
         ax.set_xlim([x_min - x_margin, x_max + x_margin])
