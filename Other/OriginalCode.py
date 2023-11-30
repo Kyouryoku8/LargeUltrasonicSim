@@ -1,7 +1,7 @@
 # Import libraries
 import numpy as np
 import matplotlib.pyplot as plt
-%matplotlib inline
+#%matplotlib inline#
 # Function to add a new transducers (XDCRs)
 def add_xdcr_record(id, phase, pos_x, pos_y, ori_x, ori_y):
     record = {
