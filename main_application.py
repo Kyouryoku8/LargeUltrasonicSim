@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
-from PyQt5.QtWidgets import QApplication, QMessageBox, QSizePolicy, QMainWindow, QVBoxLayout, QTabWidget, QFileSystemModel, QWidget, QHBoxLayout, QSplitter, QTableWidget, QTableWidgetItem, QLabel
+from PyQt5.QtWidgets import QApplication, QDialog, QFormLayout, QLineEdit, QDialogButtonBox, QMessageBox, QSizePolicy, QMainWindow, QVBoxLayout, QTabWidget, QFileSystemModel, QWidget, QHBoxLayout, QSplitter, QTableWidget, QTableWidgetItem, QLabel
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from PyQt5.QtCore import QDir, Qt
@@ -113,6 +113,15 @@ class MainApplication(QMainWindow):
         self.inputFolderView.clicked.connect(self.displaySelectedFile)
         self.outputFolderView.clicked.connect(self.displaySelectedFile)
 
+        settingsAction = optionsMenu.addAction('Settings')
+        settingsAction.triggered.connect(self.showSettingsDialog)        
+
+    def showSettingsDialog(self):
+        dialog = SettingsDialog(self)
+        if dialog.exec_():
+            width, height = dialog.getSettings()
+            self.resize(width, height)
+
     def showHelpPopup(self):
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Information)
@@ -170,6 +179,35 @@ class MainApplication(QMainWindow):
                 if item.widget():
                     item.widget().deleteLater()
             QWidget().setLayout(layout)
+
+class SettingsDialog(QDialog):
+    def __init__(self, parent=None):
+        super(SettingsDialog, self).__init__(parent)
+        self.setWindowTitle('Settings')
+
+        # Create form layout
+        layout = QFormLayout(self)
+
+        # Add window width setting
+        self.widthInput = QLineEdit(self)
+        self.widthInput.setPlaceholderText("Enter window width")
+        layout.addRow("Width:", self.widthInput)
+
+        # Add window height setting
+        self.heightInput = QLineEdit(self)
+        self.heightInput.setPlaceholderText("Enter window height")
+        layout.addRow("Height:", self.heightInput)
+
+        # Add buttons
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.Ok | QDialogButtonBox.Cancel,
+            Qt.Horizontal, self)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addRow(buttons)
+
+    def getSettings(self):
+        return int(self.widthInput.text()), int(self.heightInput.text())
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
