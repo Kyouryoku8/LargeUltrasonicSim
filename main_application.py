@@ -157,7 +157,7 @@ class MainApplication(QMainWindow):
         msgBox.setStandardButtons(QMessageBox.Ok)
         msgBox.exec_()
 
-    def visualizeData(self, filePath, target_z=2000):
+    def visualizeData(self, filePath, target_z=50):
         filtered_data = DataProcessor.filter_data_by_z(filePath, target_z)
         X, Y, Z = DataProcessor.get_xyz_from_data(filtered_data)
 
