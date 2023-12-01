@@ -17,7 +17,7 @@ def read_csv(filename):
             entry = DataEntry(
                 row['ID'],
                 row['Phase'],
-                {'x': float(row['Position_x']), 'y': float(row['Position_y']), 'z': float(row['Position_z'])},
+                {'x': float(row['Position_x'])*1000, 'y': float(row['Position_y'])*1000, 'z': float(row['Position_z'])*1000},
                 {'x': row['Orientation_x'], 'y': row['Orientation_y'], 'z': row['Orientation_z']}
             )
             data.append(entry)
