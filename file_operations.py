@@ -5,10 +5,10 @@ import shutil
 from PyQt5.QtWidgets import QFileDialog
 from data_entry import DataEntry
 
-
 def read_csv(filename):
     """
     Reads data from a CSV file and creates DataEntry objects.
+    Converts units from meters to millimeters.
     """
     data = []
     with open(filename, newline='', encoding='utf-8-sig') as csvfile:
@@ -17,7 +17,7 @@ def read_csv(filename):
             entry = DataEntry(
                 row['ID'],
                 row['Phase'],
-                {'x': row['Position_x'], 'y': row['Position_y'], 'z': row['Position_z']},
+                {'x': float(row['Position_x']), 'y': float(row['Position_y']), 'z': float(row['Position_z'])},
                 {'x': row['Orientation_x'], 'y': row['Orientation_y'], 'z': row['Orientation_z']}
             )
             data.append(entry)
