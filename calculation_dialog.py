@@ -16,7 +16,7 @@ class CalculationDialog(QDialog):
 
         layout = QVBoxLayout()
 
-        # Omitting CSV file name input
+        # Omit CSV file name input
         self.numProcessesInput = QLineEdit(self)
         self.windowInput = QLineEdit(self)
         self.resolutionInput = QLineEdit(self)

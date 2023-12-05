@@ -18,7 +18,7 @@ class OutputFilesTreeView(QTreeView):
             self.deleteFile()
 
     def viewFile(self):
-        # Implement view functionality
+        # Implement view functionality. Incomplete
         pass
 
     def visualizeFile(self):
@@ -39,4 +39,4 @@ class OutputFilesTreeView(QTreeView):
             if fileInfo.isFile():
                 filePath = fileInfo.absoluteFilePath()
                 success, message = FileUtils.deleteFile(filePath)
-                # Handle the response, e.g., show a message box or update status
+                # Handle the response—show a message box or update status

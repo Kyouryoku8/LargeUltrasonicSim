@@ -80,7 +80,7 @@ class MainApplication(QMainWindow):
 
         inputTabLayout = QVBoxLayout()
         inputTabLayout.addWidget(self.inputFolderView)
-        inputTabLayout.addWidget(self.importInputButton)  # Button below the file explorer
+        inputTabLayout.addWidget(self.importInputButton) 
         inputTab = QWidget()
         inputTab.setLayout(inputTabLayout)
         leftTabWidget.addTab(inputTab, "Input Files")
@@ -97,15 +97,14 @@ class MainApplication(QMainWindow):
 
         outputTabLayout = QVBoxLayout()
         outputTabLayout.addWidget(self.outputFolderView)
-        outputTabLayout.addWidget(self.importOutputButton)  # Button below the file explorer
+        outputTabLayout.addWidget(self.importOutputButton)  
         outputTab = QWidget()
         outputTab.setLayout(outputTabLayout)
         leftTabWidget.addTab(outputTab, "Output Files")
         # Add leftTabWidget to the main splitter
         mainSplitter.addWidget(leftTabWidget)
         
-
-        # Right tab widget for additional information or controls
+        # Right tab widget
         self.rightTabWidget = QTabWidget()
         self.dataFileTab = QWidget()
         self.dataFileLayout = QVBoxLayout()
@@ -116,12 +115,11 @@ class MainApplication(QMainWindow):
         self.dataFileTab.setLayout(self.dataFileLayout)
         self.rightTabWidget.addTab(self.dataFileTab, "Data File")
         self.rightTabWidget.addTab(QWidget(), "Field Visualization") 
-        # Add more tabs and content as needed
 
         # Add rightTabWidget to the main splitter
         mainSplitter.addWidget(self.rightTabWidget)
 
-        # Set the main splitter as the central widget of the window
+        # Set the main splitter as central widget of window
         self.setCentralWidget(mainSplitter)
         mainSplitter.setSizes([50,600])
 
@@ -172,7 +170,7 @@ class MainApplication(QMainWindow):
         # Create a matplotlib canvas and add it to the layout
         canvas = FigureCanvas(Figure(figsize=(5, 3)))
         ax = canvas.figure.add_subplot(111, projection='3d')
-        surf = ax.plot_trisurf(X, Y, Z, cmap='inferno', edgecolor='none')  # Change colormap here
+        surf = ax.plot_trisurf(X, Y, Z, cmap='inferno', edgecolor='None') # Change color map here
 
         # Set axis limits
         ax.set_xlim([x_min - x_margin, x_max + x_margin])
