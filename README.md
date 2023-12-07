@@ -34,6 +34,9 @@ To contribute:
 3. Commit changes and push to the branch.
 4. Open a pull request.
 
+TECHNICAL OVERVIEW:
+This project is a Python-based application with a focus on data management, processing, and visualization, particularly of spatial data. It leverages the PyQt framework for its GUI components using classes like 'QDialog', 'QMainWindow', and 'QTreeView'. The application is structured in a modular fashion, separating concerns such as data entry, file operations, and UI management into different files. This approach enhances maintainability and scalability. The use of classes and methods for specific tasks like file manipulation, data processing, and UI actions into different files in order to enhance both maintainability and scalability. The program uses classes and methods for specific tasks like file maniuplation, data processing, and UI actions in an object-oriented approach, facilitating code reuse and organization.
+
 TECHNICAL DESCRIPTION:
 Here is a technical description of the specific functionalities and technical implementations in the Ptyhon files of the large ultrasonic simulator. 
 1. Calculation_dialog.py
@@ -49,8 +52,27 @@ Here is a technical description of the specific functionalities and technical im
    Class 'DataEntryTreeView' (inherits 'QTreeView'): A specialized tree view for displaying data entries. It includes:
    a. 'contextMenuEvent' for handling right-click menu actions.
    b. Methods like 'viewFile', 'calculateFile', and 'deleteFile', interactive features for file manipulation within the UI
-4. 
-   
+4. 'data_processsing.py'
+   Functions for data processing: Includes several standalone functions and a class for data processing:
+   a. 'generate_grid', 'process_grid_chunk', and 'process_3d_array' for handling 3D spatial data.
+   b. 'calculate_magnitude_phase' for post-processing results.
+   c. Class 'DataProcessor': Methods like 'filter_data_by_z' and 'get_xyz_from_data' indicate functionalities for filtering and extracting spatial data.
+5. 'File_operations.py'
+   File related operations:
+   a. 'read_csv' for reading CSV files with unit conversion (meters to millimeters).
+   b. 'export_results_to_csv' for exporting processed data.
+   c. 'copy_files_to_folder' for file management
+6. 'main_application.py'
+   Class 'MainApplication' (inherits 'QMainWindow'): The central class for the application's UI.
+   a. Methods for UI initialization ('initUI'), settings dialog ('showSettingsDialog'), file import ('importFiles'), help dialog ('showHelpPopup'), and data visualization 
+   ('visualizeData').
+   b. 'clearLayout' for UI management, including dynamic UI updates.
+   c. Class 'SettingsDialog' (inherits 'QDialog'): For handling application settings, with methods for retrieving settings.
+7. 'file_utils.py'
+   Class 'FileUtils': Contains utility methods like 'deleteFile', providing basic file manipulation functionalities.
+8. 'output_files_tree_view.py'
+   Class 'OutputFilesTreeView' (inherits 'QTreeView'): Similar to 'DataEntryTreeView', it's tailored for output file management with context menu actions and file 
+   manipulation methods in the output files tab.
 
 LICENSE:
 This project is under the MIT License 
