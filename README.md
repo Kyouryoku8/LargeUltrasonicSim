@@ -1,6 +1,5 @@
-======================================================================
                        Large Ultrasonic SIM
-======================================================================
+
 
 DESCRIPTION:
 This README provides information about the Data Processing GUI Application developed in Python, designed for efficient data processing and visualization using Python libraries.
